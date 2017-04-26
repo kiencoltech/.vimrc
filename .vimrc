@@ -28,8 +28,11 @@ Plugin 'Shougo/vimproc.vim' "Support for Tsuquyomi
 Plugin 'Quramy/tsuquyomi' "Typescript IDE
 Plugin 'jiangmiao/auto-pairs' "Auto pair and make close character
 Plugin 'mattn/emmet-vim' "fast to coding html & css
-Plugin 'tpope/vim-fugitive' "git in vim"
+Plugin 'tpope/vim-fugitive' "git in vim
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'yggdroot/indentline' "indent for vim, it work in mvim, not in terminal
+Plugin 'Quramy/vim-js-pretty-template' "Plugin for templete in js file type
+Plugin 'easymotion/vim-easymotion' "Move every where fast
 
 "************Tag bar***************
 "Plugin 'majutsushi/tagbar'
@@ -59,7 +62,6 @@ let NERDTreeQuitOnOpen=1 "Close nerdtree when open file"
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
-
 " *** Common setting *** "
 syntax on
 syntax enable
@@ -77,12 +79,16 @@ set expandtab
 set splitright
 set noswapfile
 
+autocmd Filetype html,scss,js,* match Error /\s\+$/ "*** Whitespace ***"
+" Install for vim-js-pretty-templete
+autocmd FileType typescript JsPreTmpl html
+autocmd FileType typescript syn clear foldBraces
 
 " Resizing a window split
-nmap + :res +2<CR> " increase pane by 2 
-nmap _ :res -2<CR> " decrease pane by 2
-nmap > :vertical res +2<CR> " vertical increase pane by 2
-nmap < :vertical res -2<CR> " vertical decrease pane by 2
+nmap + :res +7<CR> " increase pane by 2 
+nmap _ :res -7<CR> " decrease pane by 2
+nmap > :vertical res +7<CR> " vertical increase pane by 2
+nmap < :vertical res -7<CR> " vertical decrease pane by 2
 "*********Setting for tag bar******************
 
 "let g:tagbar_type_typescript = {
@@ -129,6 +135,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
 " ***Typescript vim *** "
 "let g:syntastic_typescript_checkers = ['tslint', 'tsc'] "Enable tsling and tsc checker for typescript"
 let g:syntastic_html_checkers = []  "Don't check .html files"
@@ -152,6 +159,26 @@ let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't us
 nmap <F9> :TsuImport<CR>
 nmap <F10> :TsuReferences<cr>
 nmap <F11> :TsuDefinition<cr>
+
+" *** EasyMotion ***"
+map <Space>w <Plug>(easymotion-w)
+map <Space>f <Plug>(easymotion-f)
+map <Space>j <Plug>(easymotion-j)
+map <Space>k <Plug>(easymotion-k)
+"let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Turn on case insensitive feature
+"let g:EasyMotion_smartcase = 1
+
+" Gif config
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 
 " *** emmet vim *** "
 let g:user_emmet_install_global = 0
