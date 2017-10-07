@@ -33,6 +33,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'yggdroot/indentline' "indent for vim, it work in mvim, not in terminal
 Plugin 'Quramy/vim-js-pretty-template' "Plugin for templete in js file type
 Plugin 'easymotion/vim-easymotion' "Move every where fast
+Plugin 'airblade/vim-gitgutter' "Show diff of git and working version
 
 "************Tag bar***************
 "Plugin 'majutsushi/tagbar'
@@ -68,7 +69,8 @@ syntax enable
 set confirm "get a dialog when :q, :w, or :wq fails
 set backspace=indent,eol,start " Enable delete over line breaks and automatically-inserted indentation"
 set nobackup "no backup~ files
-set encoding=utf8
+set encoding=utf-8
+set updatetime=250
 set nu
 colorscheme molokai
 
@@ -84,8 +86,17 @@ autocmd Filetype html,scss,js,* match Error /\s\+$/ "*** Whitespace ***"
 autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 
+" auto complete
+filetype plugin on
+" Enable autocompletion
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags "auto complete for html
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS "auto complete for css
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS "auto complete for javascript
+autocmd FileType python set omnifunc=pythoncomplete#Complete "auto complete for python
+
 " Resizing a window split
-nmap + :res +7<CR> " increase pane by 2 
+nmap + :res +7<CR> " increase pane by 2
 nmap _ :res -7<CR> " decrease pane by 2
 nmap > :vertical res +7<CR> " vertical increase pane by 2
 nmap < :vertical res -7<CR> " vertical decrease pane by 2
@@ -113,14 +124,17 @@ nmap < :vertical res -7<CR> " vertical decrease pane by 2
 "    \ ]
 "\ }
 
-" *** CtrlP *** "
+" *** rking/ag *** "
 " Config for rking/ag: default will be ignore file inste : .gitignore, ... 
 " So we can put special folder or file in external file: .agignore
 " If you want global: put it in bash_profile
 " refer:https://github.com/ggreer/the_silver_searcher/wiki/Advanced-Usage
-
+" *** NERDcommenter *** "
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/'  }  }
 " *** CtrlP *** "
 let g:ag_working_path_mode="r" "Search from root of project
+let g:ag_highlight=1
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|platforms\|release\|git' " ignore to search   
 " *** Gundo *** "
 nnoremap <F5> :GundoToggle<CR>
@@ -154,10 +168,14 @@ let g:tsuquyomi_completion_detail = 1
 
 "let g:syntastic_check_on_open=1 "check files on open, not just save
 let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
+"let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint'] " You shouldn't use 'tsc' checker.
+let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
 " ***  Tsuquyomi *** "
+" Click Fn + F9 to import
 nmap <F9> :TsuImport<CR>
+"Click Fn + F10 to References
 nmap <F10> :TsuReferences<cr>
+"Click Fn + F11 to Define
 nmap <F11> :TsuDefinition<cr>
 
 " *** EasyMotion ***"
@@ -183,7 +201,7 @@ map  N <Plug>(easymotion-prev)
 " *** emmet vim *** "
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss EmmetInstall " Enable just for html/css"
-let g:user_emmet_leader_key = '<tab>'
+let g:user_emmet_leader_key = '<tab>' " type : Tab + comma to auto fill everything
 "let g:user_emmet_prev_key = '<c-j>'
 "let g:user_emmet_next_key = '<c-k>'
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
