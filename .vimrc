@@ -5,17 +5,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " *** Core Plugin *** "
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim' "PluginInstall
 Plugin 'flazz/vim-colorschemes'
-Plugin 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim' " Search a file: Ctr + P
 
 " *** Main Plugin *** "
-Plugin 'scrooloose/nerdtree' "Nerdtree to manager file, folder...
+Plugin 'scrooloose/nerdtree' "Nerdtree to manager file, folder... : Ctr + n-> hide or show
 Plugin 'Valloric/YouCompleteMe' "Auto suggest and complete code
 "Plugin 'Lokaltog/vim-powerline' "Show something like tab in vim to show property of file open
-Plugin 'rking/ag.vim' "Search in vim, need to install the_silver_searche : brew install ...
-Plugin 'sjl/gundo.vim' "Mirror in vim : undo and redo in vim
-Plugin 'Xuyuanp/nerdtree-git-plugin' "show diff from remote and local in git
+Plugin 'rking/ag.vim' "Search in vim, need to install the_silver_searche : brew install ... :Ag! 'search word'
+Plugin 'sjl/gundo.vim' "Mirror in vim : undo and redo in vim : Fn + F5
+Plugin 'Xuyuanp/nerdtree-git-plugin' "show diff from remote and local in git on nertree
 Plugin 'vim-syntastic/syntastic' "Syntax check
 Plugin 'itchyny/lightline.vim' "statusline/tabline for Vim
 
@@ -29,14 +29,14 @@ Plugin 'Quramy/tsuquyomi' "Typescript IDE
 Plugin 'jiangmiao/auto-pairs' "Auto pair and make close character
 Plugin 'mattn/emmet-vim' "fast to coding html & css
 Plugin 'tpope/vim-fugitive' "git in vim
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter' " \ + cc -> comment !! | + cu -> uncomment
 Plugin 'yggdroot/indentline' "indent for vim, it work in mvim, not in terminal
 Plugin 'Quramy/vim-js-pretty-template' "Plugin for templete in js file type
-Plugin 'easymotion/vim-easymotion' "Move every where fast
-Plugin 'airblade/vim-gitgutter' "Show diff of git and working version
+Plugin 'easymotion/vim-easymotion' "Move every where fast: Space + w -> set index in below !! Space + k -> index first charactor up !! Space + J
+Plugin 'airblade/vim-gitgutter' "Show diff of git and working version: Gdiff !! Gstatus
 
 "************Tag bar***************
-"Plugin 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 
 "***************************
 "Nerdtree for manager explore
@@ -50,8 +50,10 @@ filetype plugin indent on    " required
 au VimEnter *  NERDTree
 
 "*********Hot key******************
+" Ctr + N to show or hide Nerdtree
 map <c-n> :NERDTreeToggle<CR>
-"nmap <F8> :TagbarToggle<CR>
+" Ctr + F8 to show all declare and function
+nmap <F8> :TagbarToggle<CR>
 
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
@@ -102,27 +104,27 @@ nmap > :vertical res +7<CR> " vertical increase pane by 2
 nmap < :vertical res -7<CR> " vertical decrease pane by 2
 "*********Setting for tag bar******************
 
-"let g:tagbar_type_typescript = {
-"  \ 'ctagstype': 'typescript',
-"  \ 'kinds': [
-"    \ 'c:classes',
-"    \ 'n:modules',
-"    \ 'f:functions',
-"    \ 'v:variables',
-"    \ 'v:varlambdas',
-"    \ 'm:members',
-"    \ 'i:interfaces',
-"    \ 'e:enums',
-"  \ ]
-"\ }
-"let g:tagbar_type_css = {
-"\ 'ctagstype' : 'Css',
-"    \ 'kinds'     : [
-"        \ 'c:classes',
-"        \ 's:selectors',
-"        \ 'i:identities'
-"    \ ]
-"\ }
+let g:tagbar_type_typescript = {
+  \ 'ctagstype': 'typescript',
+  \ 'kinds': [
+    \ 'c:classes',
+    \ 'n:modules',
+    \ 'f:functions',
+    \ 'v:variables',
+    \ 'v:varlambdas',
+    \ 'm:members',
+    \ 'i:interfaces',
+    \ 'e:enums',
+  \ ]
+\ }
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
 
 " *** rking/ag *** "
 " Config for rking/ag: default will be ignore file inste : .gitignore, ... 
