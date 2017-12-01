@@ -1,6 +1,37 @@
+" *** readme ***
+" 1. List plugin
+" Plugin name | used | install guide | shortcut |
+"
+" *** common plugin for vim ***
+" YouCompleteMe | auto completed code | O | X |
+" Vundle | plugin manager | X | X |
+" Colorschemes | color for vim tab | X | X |
+" ctrlp | search and open file | X | Ctrl + P |
+" nerdtree | file explore | x | Ctrl + N |
+" ag | search in file | x | :Ag! --filetype abc |
+" gundo | undo history | x | F5 |
+" nerdtree-git-plugin | mark when have modify in nerd | x | x |
+" syntastic | check syntax | x | x |
+" lightline | make vim have lightline | x | x |
+"
+" *** ionic language ***
+" vim-ionic2 |
+" typescript-vim |
+" vimproc |
+" tsuquyomi | typescript ide |
+"
+" *** support dev ***
+" auto-pairs | auto pair | x | x |
+" emmet-vim | fast coding in vim | x | x |
+" vim-fugitive | git in vim | x | :Gdiff... |
+" nerdcommenter | comment and uncomemnt in vim  | x | \ + cc -> comment \+cu |
+" vim-easymotion | move everywhere | x | x |
+" tagbar | open overview in righ side | sudo apt-get install exuberant-ctags | F6 |
+
+
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -10,37 +41,30 @@ Plugin 'VundleVim/Vundle.vim' "PluginInstall
 Plugin 'flazz/vim-colorschemes'
 Plugin 'kien/ctrlp.vim' " Search a file: Ctr + P
 
-" *** Main Plugin *** "
+" *** Dev Plugin *** "
 Plugin 'scrooloose/nerdtree' "Nerdtree to manager file, folder... : Ctr + n-> hide or show
 Plugin 'Valloric/YouCompleteMe' "Auto suggest and complete code
-"Plugin 'Lokaltog/vim-powerline' "Show something like tab in vim to show property of file open
 Plugin 'rking/ag.vim' "Search in vim, need to install the_silver_searche : brew install ... :Ag! 'search word'
 Plugin 'sjl/gundo.vim' "Mirror in vim : undo and redo in vim : Fn + F5
 Plugin 'Xuyuanp/nerdtree-git-plugin' "show diff from remote and local in git on nertree
-Plugin 'vim-syntastic/syntastic' "Syntax check
 Plugin 'itchyny/lightline.vim' "statusline/tabline for Vim
+Plugin 'majutsushi/tagbar' "F6 to open and close tagbar
+Plugin 'easymotion/vim-easymotion' "Move every where fast: Space + w -> set index in below !! Space + k -> index first charactor up !! Space + J
+Plugin 'yggdroot/indentline' "indent for vim, it work in mvim, not in terminal
+Plugin 'scrooloose/nerdcommenter' " \ + cc -> comment !! | + cu -> uncomment
+Plugin 'jiangmiao/auto-pairs' "Auto pair and make close character
+Plugin 'mattn/emmet-vim' "fast to coding html & css
+Plugin 'tpope/vim-fugitive' "Show diff of git and working version: Gdiff !! Gstatus
 
-
-
-" *** Dev *** "
+" *** Language *** "
 Plugin 'akz92/vim-ionic2'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Shougo/vimproc.vim' "Support for Tsuquyomi
 Plugin 'Quramy/tsuquyomi' "Typescript IDE
-Plugin 'jiangmiao/auto-pairs' "Auto pair and make close character
-Plugin 'mattn/emmet-vim' "fast to coding html & css
-Plugin 'tpope/vim-fugitive' "git in vim
-Plugin 'scrooloose/nerdcommenter' " \ + cc -> comment !! | + cu -> uncomment
-Plugin 'yggdroot/indentline' "indent for vim, it work in mvim, not in terminal
 Plugin 'Quramy/vim-js-pretty-template' "Plugin for templete in js file type
-Plugin 'easymotion/vim-easymotion' "Move every where fast: Space + w -> set index in below !! Space + k -> index first charactor up !! Space + J
-Plugin 'airblade/vim-gitgutter' "Show diff of git and working version: Gdiff !! Gstatus
-
-"************Tag bar***************
-Plugin 'majutsushi/tagbar'
+Plugin 'vim-syntastic/syntastic' "Syntax check
 
 "***************************
-"Nerdtree for manager explore
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -74,24 +98,35 @@ set backspace=indent,eol,start " Enable delete over line breaks and automaticall
 set nobackup "no backup~ files
 set encoding=utf-8
 set updatetime=250
+"This enables line numbers in your vim
 set nu
 colorscheme molokai
 
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 
 set splitright
 set noswapfile
+" *** This enables mouse which is disabled by default ***
+set mouse=a
 
 autocmd Filetype html,scss,js,* match Error /\s\+$/ "*** Whitespace ***"
 " Install for vim-js-pretty-templete
 autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 
-" auto complete
+"*** Start: This makes indentation similar to that of editors like Notepad++, Sublime ***
+inoremap { {<CR><BS>}<Esc>ko
+:inoremap ( ()<Esc>i
+noremap        (  ()<Left>
+inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+inoremap " ""<Esc>i
+inoremap [ []<Esc>i ]")}
+"*** end of indentation ***
+"*** auto complete ***
 filetype plugin on
-" Enable autocompletion
+" ***Enable autocompletion ***
 set omnifunc=syntaxcomplete#Complete
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags "auto complete for html
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS "auto complete for css
@@ -104,6 +139,8 @@ nmap _ :res -7<CR> " decrease pane by 2
 nmap > :vertical res +7<CR> " vertical increase pane by 2
 nmap < :vertical res -7<CR> " vertical decrease pane by 2
 "*********Setting for tag bar******************
+"*** F6 to open or close tag bar ***
+nmap <F6> :TagbarToggle<CR>
 
 let g:tagbar_type_typescript = {
   \ 'ctagstype': 'typescript',
@@ -152,6 +189,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:ycm_server_python_interpreter = 'python2'
 
 " ***Typescript vim *** "
 "let g:syntastic_typescript_checkers = ['tslint', 'tsc'] "Enable tsling and tsc checker for typescript"
